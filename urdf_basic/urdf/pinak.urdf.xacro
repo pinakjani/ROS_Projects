@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<robot name="pinak_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="width" value="0.2" />
+  <xacro:property name="leglen" value="0.6" />
+  <xacro:property name="polelen" value="0.2" />
+  <xacro:property name="bodylen" value="0.6" />
+  <xacro:property name="baselen" value="0.4" />
+  <xacro:property name="wheeldiam" value="0.07" />
+  <xacro:property name="pi" value="3.1415" />
+
+  <xacro:include filename="$(find urdf_basic)/urdf/pinak.gazebo" />
+
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+
+  <material name="">
+    <color rgba="1 0 0 1"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="1 0.64 0 1"/>
+  </material>
+
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <xacro:macro name="default_inertial" params="mass">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1" />
+    </inertial>
+  </xacro:macro>
+
+<!-- /
+      
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size = "0.5 0.5 0.1"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="10"/> 
+    </link> -->
+  <link name = "world"/>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size = "0.1 0.1 0.8"/>
+      </geometry>
+      <origin xyz="0 0.0 0" />
+      
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size = "0.1 0.1 0.8"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="100"/>
+  </link>
+  <link name="link1">
+    <visual>
+      <geometry>
+        <box size = "0.5 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0.25 0.0 0" />
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size = "0.5 0.1 0.1"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="30"/>
+  </link>
+  <link name="link2">
+    <visual>
+      <geometry>
+        <box size = "0.1 0.1 0.3"/>
+      </geometry>
+      <origin xyz="0 0 -0.1" />
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size = "0 0.1 0.3"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="40"/>
+  </link>
+
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size = "0.1 0.1 0.1"/>
+      </geometry>
+      <origin xyz="0 0 -0.1" />
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size = "0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="20"/>
+  </link>
+
+  <link name="obj_square">
+    <visual>
+      <geometry>
+        <box size = "0.3 0.3 0.05"/>
+      </geometry>
+      
+      <material name="orange"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size = "0.3 0.3 0.1"/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="200"/>
+  </link>
+
+  <link name="obj_circle1">
+  <visual>
+    <geometry>
+      <cylinder length = '0.05' radius = '0.03'/>
+    </geometry>
+    
+    <material name="red"/>
+  </visual>
+  <collision>
+    <geometry>
+      <cylinder length = '0.05' radius = '0.03'/>
+    </geometry>
+  </collision>
+  <xacro:default_inertial mass="1"/>
+  </link>
+
+  <link name="obj_circle2">
+  <visual>
+    <geometry>
+      <cylinder length = '0.05' radius = '0.03'/>
+    </geometry>
+    
+    <material name="blue"/>
+  </visual>
+  <collision>
+    <geometry>
+      <cylinder length = '0.05' radius = '0.03'/>
+    </geometry>
+  </collision>
+  <xacro:default_inertial mass="1"/> 
+  </link>
+
+  <link name="obj_circle3">
+    <visual>
+      <geometry>
+        <cylinder length = '0.05' radius = '0.03'/>
+      </geometry>
+      
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length = '0.05' radius = '0.03'/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="1"/>
+  </link>
+
+  <link name="obj_circle4">
+    <visual>
+      <geometry>
+        <cylinder length = '0.05' radius = '0.03'/>
+      </geometry>
+      
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length = '0.05' radius = '0.03'/>
+      </geometry>
+    </collision>
+    <xacro:default_inertial mass="1"/>
+  </link> 
+
+  <joint name="joint0" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <joint name="base_to_link" type="fixed">
+      <parent link="base_link"/>
+      <child link="link1"/>
+      <origin xyz="0 0 0.4" />
+    </joint>
+  <joint name="link1_to_link2" type="fixed">
+      <parent link="link1"/>
+      <child link="link2"/>
+      <origin xyz="0.5 0 0" />
+    </joint>
+  <joint name="link2_to_camera" type="fixed">
+      <parent link="link2"/>
+      <child link="camera_link"/>
+      <origin xyz="0 0 -0.2" rpy = "0 ${pi/2} 0" />
+    </joint>
+    <joint name="base_to_obj" type="fixed">
+      <parent link="world"/>
+      <child link="obj_square"/>
+      <origin xyz="0.5 0 0" />
+    </joint>
+    <joint name="obj_to_c1" type="fixed">
+      <parent link="obj_square"/>
+      <child link="obj_circle1"/>
+      <origin xyz="-0.08 0.08 0.1" />
+    </joint>
+     <joint name="obj_to_c2" type="fixed">
+      <parent link="obj_square"/>
+      <child link="obj_circle2"/>
+      <origin xyz="-0.08 -0.08 0.1" />
+    </joint>
+     <joint name="obj_to_c3" type="fixed">
+      <parent link="obj_square"/>
+      <child link="obj_circle3"/>
+      <origin xyz="0.08 0.08 0.1" />
+    </joint>
+    <joint name="obj_to_c4" type="fixed">
+      <parent link="obj_square"/>
+      <child link="obj_circle4"/>
+      <origin xyz="0.08 -0.08 0.1" />
+    </joint>
+
+<!-- <gazebo>
+  <plugin name = "gazebo_ros_control" filename = "libgazebo_ros_control.so">
+    <robotNamespace>/</robotNamespace>
+  </plugin>
+</gazebo> -->
+</robot>
+
